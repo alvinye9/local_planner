@@ -13,7 +13,7 @@ class LocalPlannerNode(Node):
     def __init__(self):
         super().__init__('local_planner')
         self.get_logger().info("Hello from WOO")
-        self.position = 10
+        self.position = 10 #will read in actual position from data
         self.counter_ = 0.0
         self.vel_publisher = self.create_publisher(Float32, '/planning/desired_velocity', 10)  # Create a publisher for Float32 values, to desired velocity topic, Queue size of 10
         self.path_publisher = self.create_publisher(Path, '/planning/front_path/offset_path', 10)
@@ -107,22 +107,14 @@ def main(args=None):
 
     # Example usage
     input_file = os.path.expanduser('~/pair/src/local_planner/data/trajoutput.csv') #need to start from home dir and use os since nodes exist in diff environment
-    column_name = 's_m'
+    #column_name = 's_m'
 
-    lower_bound = node.position
-    upper_bound = lower_bound + 10
+    #lower_bound = node.position
+    #upper_bound = lower_bound + 10
 
     #node.read_csv_column(input_file, column_name, lower_bound, upper_bound)
     data_x_y_psi = node.read_specific_columns(input_file)
-    node.process_csv_data(data_x_y_psi)
-
-    # # Test the transformation function
-    # x_global = 3.0  # Example x-coordinate in global frame
-    # y_global = 4.0  # Example y-coordinate in global frame
-    # psi = np.pi/4  # Example yaw angle (45 degrees in radians)
-
-    # x_body, y_body = node.global_to_body_fixed(x_global, y_global, psi)
-    # print(f'Body-fixed coordinates: x_b = {x_body}, y_b = {y_body}')
+    node.process_csv_data(data_x_y_psi,0,5)
 
 
     rclpy.spin(node)

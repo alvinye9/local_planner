@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "local_planner = local_planner.local_planner:main"
+            "local_planner = local_planner.local_planner:main",
+            "publish_transform = local_planner.publish_transform:main",
+            "straight_line = local_planner.straight_line:main"
         ],
     },
 )
